@@ -31,10 +31,10 @@ func loopCmd() error {
 	}
 	defer fp.Close()
 
-	cmd := exec.Command("arkmanager", "status")
+	cmd := exec.Command("bash", "-c", "arkmanager status | sed -r \"s/\\x1B\\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g\"")
 	cmd.Stdout = fp
-	cmd.Stderr = fp
-	cmd.Run()
+	cmd.Start()
+	cmd.Wait()
 
 	return nil
 }
